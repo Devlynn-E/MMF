@@ -62,6 +62,21 @@ def num_check(question, low=12, high=120, exit_code="x"):
     return result
 
 
+# calculate the ticket price based on age
+def ticket_price(var_age):
+
+    if var_age < 16:
+        price = 7.50
+
+    elif 16 <= var_age < 65:
+        price = 10.50
+
+    else:
+        price = 6.50
+
+    return price
+
+
 # main
 
 # set default settings
@@ -74,18 +89,26 @@ want_instructions = yes_no("Do you want to see the instructions? ")
 if want_instructions == "yes":
     print("\ninstructions")
 
-# loop to sell
+# loop to sell all tickets
 while tickets_sold < max_tickets:
-    name = not_blank("What is your name? ('x' to quit) ")
+
+    # asks user for their name, if user inputs exit code, code stops.
+    name = not_blank("\nWhat is your name? ('x' to quit) ")
 
     if name == "x":
         break
 
+    # asks the user for their age (has exit code)
     age = num_check(f"\n{name}, please enter your age: ")
 
     if age == "x":
         break
 
+    # calculates the cost of the ticket
+    ticket_cost = ticket_price(age)
+    print(f"Age: {age}, Ticket Price: ${ticket_cost:.2f}")
+
+    # adds to the total of tickets sold
     tickets_sold += 1
 
 # output sold tickets
