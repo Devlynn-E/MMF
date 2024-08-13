@@ -1,19 +1,17 @@
 # functions
 
-# checks if a response was yes or no
-def yes_no(question):
+# checks the user entered a valid response based on a list of options
+def string_checker(question, num_letters, valid_responses):
 
     while True:
+
         response = input(question).lower()
 
-        if response == "yes" or response == "y":
-            return "yes"
+        for item in valid_responses:
+            if response == item[:num_letters] or response == item:
+                return item
 
-        elif response == "no" or response == "n":
-            return "no"
-
-        else:
-            print("please enter yes or no")
+        print(f"Please enter a valid response ({valid_responses[0]} or {valid_responses[1]})")
 
 
 # checks that an input was not left blank
@@ -83,8 +81,11 @@ def ticket_price(var_age):
 max_tickets = 3
 tickets_sold = 0
 
+yes_no_list = ["yes", "no"]
+payment_list = ["cash", "credit"]
+
 # asks if user wants instructions
-want_instructions = yes_no("Do you want to see the instructions? ")
+want_instructions = string_checker("Do you want to see the instructions? ", 1, yes_no_list)
 
 if want_instructions == "yes":
     print("\ninstructions")
@@ -106,7 +107,9 @@ while tickets_sold < max_tickets:
 
     # calculates the cost of the ticket
     ticket_cost = ticket_price(age)
-    print(f"Age: {age}, Ticket Price: ${ticket_cost:.2f}")
+
+    # get payment method
+    pay_method = string_checker("\nhow would you like to pay? ", 2, payment_list)
 
     # adds to the total of tickets sold
     tickets_sold += 1
